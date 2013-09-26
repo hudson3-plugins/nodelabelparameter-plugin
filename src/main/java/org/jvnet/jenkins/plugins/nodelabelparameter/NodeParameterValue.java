@@ -4,8 +4,6 @@
 package org.jvnet.jenkins.plugins.nodelabelparameter;
 
 import hudson.model.AbstractBuild;
-import hudson.model.Computer;
-import hudson.model.Node;
 import hudson.model.ParameterDefinition;
 import hudson.model.ParametersDefinitionProperty;
 import hudson.tasks.BuildWrapper;
@@ -14,8 +12,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
-
-import jenkins.model.Jenkins;
 
 import org.apache.commons.lang.StringUtils;
 import org.jvnet.jenkins.plugins.nodelabelparameter.wrapper.TriggerNextBuildWrapper;

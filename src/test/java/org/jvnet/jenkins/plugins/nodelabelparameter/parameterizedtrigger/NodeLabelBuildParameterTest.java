@@ -38,51 +38,51 @@ import org.jvnet.jenkins.plugins.nodelabelparameter.LabelParameterDefinition;
 
 public class NodeLabelBuildParameterTest extends HudsonTestCase {
 
-	/**
-	 * Tests whether a job A is able to trigger job B to be executed on a
-	 * specific node/slave. If it does not work, the timeout will stop/fail the
-	 * test after 60 seconds.
-	 * 
-	 * @throws Exception
-	 */
-	public void test() throws Exception {
+    /**
+     * Tests whether a job A is able to trigger job B to be executed on a
+     * specific node/slave. If it does not work, the timeout will stop/fail the
+     * test after 60 seconds.
+     *
+     * @throws Exception
+     */
+    public void test() throws Exception {
 
-		final String paramName = "node";
-		final String nodeName = "someNode" + System.currentTimeMillis();
+        final String paramName = "node";
+        final String nodeName = "someNode" + System.currentTimeMillis();
 
-		// create a slave with a given label to execute projectB on
-		DumbSlave slave = createOnlineSlave(new LabelAtom(nodeName));
+        // create a slave with a given label to execute projectB on
+        DumbSlave slave = createOnlineSlave(new LabelAtom(nodeName));
 
-		// create projectA, which triggers projectB with a given label parameter
-		Project<?, ?> projectA = createFreeStyleProject("projectA");
-		projectA.getPublishersList().add(
-				new BuildTrigger(new BuildTriggerConfig("projectB",
-						ResultCondition.SUCCESS, new NodeLabelBuildParameter(
-								paramName, nodeName))));
+        // create projectA, which triggers projectB with a given label parameter
+        Project<?, ?> projectA = createFreeStyleProject("projectA");
+        projectA.addPublisher(
+                new BuildTrigger(new BuildTriggerConfig("projectB",
+                ResultCondition.SUCCESS, new NodeLabelBuildParameter(
+                paramName, nodeName))));
 
-		// create projectB, with a predefined parameter (same name as used in
-		// projectA!)
-		FreeStyleProject projectB = createFreeStyleProject("projectB");
-		ParametersDefinitionProperty pdp = new ParametersDefinitionProperty(
-				new LabelParameterDefinition(paramName, "some desc",
-						"wrongNodeName"));
-		projectB.addProperty(pdp);
-		// CaptureEnvironmentBuilder builder = new CaptureEnvironmentBuilder();
-		// projectB.getBuildersList().add(builder);
-		projectB.setQuietPeriod(1);
-		hudson.rebuildDependencyGraph();
+        // create projectB, with a predefined parameter (same name as used in
+        // projectA!)
+        FreeStyleProject projectB = createFreeStyleProject("projectB");
+        ParametersDefinitionProperty pdp = new ParametersDefinitionProperty(
+                new LabelParameterDefinition(paramName, "some desc",
+                "wrongNodeName"));
+        projectB.addProperty(pdp);
+        // CaptureEnvironmentBuilder builder = new CaptureEnvironmentBuilder();
+        // projectB.getBuildersList().add(builder);
+        projectB.setQuietPeriod(1);
+        hudson.rebuildDependencyGraph();
 
-		// projectA should trigger projectB just after execution, therefore we
-		// never trigger projectB explicitly
-		projectA.scheduleBuild2(0).get();
-		hudson.getQueue().getItem(projectB).getFuture().get();
+        // projectA should trigger projectB just after execution, therefore we
+        // never trigger projectB explicitly
+        projectA.scheduleBuild2(0).get();
+        hudson.getQueue().getItem(projectB).getFuture().get();
 
-		FreeStyleBuild build = projectB.getLastCompletedBuild();
-		String foundNodeName = build.getBuildVariables().get(paramName);
-		assertNotNull("project should run on a specific node", foundNodeName);
-		assertEquals(nodeName, foundNodeName);
+        FreeStyleBuild build = projectB.getLastCompletedBuild();
+        String foundNodeName = build.getBuildVariables().get(paramName);
+        assertNotNull("project should run on a specific node", foundNodeName);
+        assertEquals(nodeName, foundNodeName);
 
-		hudson.removeNode(slave);
+        hudson.removeNode(slave);
 
-	}
+    }
 }

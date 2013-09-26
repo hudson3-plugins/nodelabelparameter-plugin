@@ -1,8 +1,8 @@
 package org.jvnet.jenkins.plugins.nodelabelparameter;
 
 import hudson.model.Computer;
+import hudson.model.Hudson;
 import hudson.model.Node;
-import jenkins.model.Jenkins;
 
 public final class NodeUtil {
 
@@ -18,7 +18,7 @@ public final class NodeUtil {
         if("master".equals(nodeName)){
             return true;
         }
-        final Computer c = Jenkins.getInstance().getComputer(nodeName);
+        final Computer c = Hudson.getInstance().getComputer(nodeName);
         if(c != null){
             Node n = c.getNode();
             return n!=null && c.isOnline() && c.getNumExecutors()>0;

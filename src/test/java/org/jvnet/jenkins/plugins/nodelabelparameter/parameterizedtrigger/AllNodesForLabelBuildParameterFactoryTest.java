@@ -39,8 +39,8 @@ public class AllNodesForLabelBuildParameterFactoryTest extends HudsonTestCase {
         FreeStyleProject projectB = createFreeStyleProject();
         projectB.setQuietPeriod(1);
 
-		// create projectA, which triggers projectB with a given label parameter
-		Project<?, ?> projectA = createFreeStyleProject();
+        // create projectA, which triggers projectB with a given label parameter
+        Project<?, ?> projectA = createFreeStyleProject();
         addLabelParameterFactory(projectA, projectB, label);
 
         projectA.scheduleBuild2(0);
@@ -60,8 +60,8 @@ public class AllNodesForLabelBuildParameterFactoryTest extends HudsonTestCase {
         FreeStyleProject projectB = createFreeStyleProject();
         projectB.setQuietPeriod(1);
 
-		// create projectA, which triggers projectB with a given label parameter
-		Project<?, ?> projectA = createFreeStyleProject();
+        // create projectA, which triggers projectB with a given label parameter
+        Project<?, ?> projectA = createFreeStyleProject();
         addBlockingLabelParameterFactory(projectA, projectB, label);
 
         projectA.scheduleBuild2(0);

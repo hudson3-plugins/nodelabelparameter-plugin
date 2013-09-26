@@ -17,8 +17,6 @@ import java.util.List;
 import java.util.StringTokenizer;
 import java.util.logging.Logger;
 
-import jenkins.model.Jenkins;
-
 import org.apache.commons.lang.StringUtils;
 import org.jenkinsci.plugins.tokenmacro.MacroEvaluationException;
 import org.jenkinsci.plugins.tokenmacro.TokenMacro;
@@ -28,6 +26,7 @@ import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
 
 import com.google.common.collect.Lists;
+import hudson.model.Hudson;
 
 /**
  * A build parameter factory generating NodeLabelParameters for each node matching a label
@@ -91,7 +90,7 @@ public class NodeListBuildParameterFactory extends AbstractBuildParameterFactory
         public AutoCompletionCandidates doAutoCompleteNodeListString(@QueryParameter String value) {
             final AutoCompletionCandidates candidates = new AutoCompletionCandidates();
 
-            for (Node n : Jenkins.getInstance().getNodes()) {
+            for (Node n : Hudson.getInstance().getNodes()) {
                 candidates.add(n.getSelfLabel().getExpression());
             }
 
@@ -111,7 +110,7 @@ public class NodeListBuildParameterFactory extends AbstractBuildParameterFactory
             while (tokens.hasMoreTokens()) {
                 String nodeName = tokens.nextToken().trim();
                 if (StringUtils.isNotBlank(nodeName)) {
-                    final Node node = Jenkins.getInstance().getNode(nodeName);
+                    final Node node = Hudson.getInstance().getNode(nodeName);
                     if (node == null) {
                         return FormValidation.error(Messages.NodeListBuildParameterFactory_nodeNotFound(nodeName));
                     }

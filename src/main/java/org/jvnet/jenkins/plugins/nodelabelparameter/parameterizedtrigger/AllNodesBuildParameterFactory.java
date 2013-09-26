@@ -12,12 +12,12 @@ import hudson.plugins.parameterizedtrigger.AbstractBuildParameters;
 import java.io.PrintStream;
 import java.util.List;
 
-import jenkins.model.Jenkins;
 
 import org.jvnet.jenkins.plugins.nodelabelparameter.Messages;
 import org.kohsuke.stapler.DataBoundConstructor;
 
 import com.google.common.collect.Lists;
+import hudson.model.Hudson;
 
 /**
  * Triggers builds on all slaves.
@@ -31,7 +31,7 @@ public class AllNodesBuildParameterFactory extends AbstractBuildParameterFactory
 
     @Override
     public List<AbstractBuildParameters> getParameters(AbstractBuild<?, ?> build, TaskListener listener) {
-        Computer[] nodes = Jenkins.getInstance().getComputers();
+        Computer[] nodes = Hudson.getInstance().getComputers();
 
         final PrintStream logger = listener.getLogger();
         List<AbstractBuildParameters> params = Lists.newArrayList();

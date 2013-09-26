@@ -1,9 +1,9 @@
-Label Parameter plugin for Jenkins
+Label Parameter plugin for Hudson
 ==================================
 
-the nodelabel parameter plugin enables one to dynamically define a node or label which jenkins uses to select an appropriate node/slave to execute the job on.
+The nodelabel parameter plugin enables one to dynamically define a node or label which Hudson uses to select an appropriate node/slave to execute the job on.
 
 So in short: with this plugin one is able to choose the node to run a job on while triggering it.
 
-find more at https://wiki.jenkins-ci.org/display/JENKINS/NodeLabel+Parameter+Plugin
+find more at http://wiki.hudson-ci.org/display/HUDSON/NodeLabel+Parameter+Plugin
 

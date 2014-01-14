@@ -12,7 +12,7 @@
   
     <groupId>org.hudsonci.plugins</groupId>
     <artifactId>nodelabelparameter</artifactId>
-    <version>1.4.1-h-1-SNAPSHOT</version>
+    <version>1.4.1-h-1</version>
 
     <packaging>hpi</packaging>
 
